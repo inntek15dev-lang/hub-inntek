@@ -1,0 +1,50 @@
+# Database Schema: Catálogo Gestionado PARKO
+
+## Tablas y Relaciones
+
+```sql
+-- Tabla: CategoriasUsabilidad
+CREATE TABLE CategoriasUsabilidad (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL UNIQUE, -- Ej: operativo, documental, reportes
+    slug VARCHAR(100) NOT NULL UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Tabla: ElementosCatalogo
+CREATE TABLE ElementosCatalogo (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(255) NOT NULL,
+    detalle TEXT,
+    imagen_url VARCHAR(500),
+    tipo_producto VARCHAR(100), -- MVP, Demo, UAT
+    set_iconos JSON, -- Array de rutas o nombres de íconos
+    categoria_id INT,
+    url_sitio VARCHAR(500),
+    url_documentacion VARCHAR(500),
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (categoria_id) REFERENCES CategoriasUsabilidad(id)
+);
+
+-- Tabla: ConfiguracionGeneral
+CREATE TABLE ConfiguracionGeneral (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titulo_home VARCHAR(255),
+    descripcion_home TEXT,
+    logo_url VARCHAR(500),
+    metadata JSON, -- SEO metatags, etc.
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Usuarios (Referencial, si hub-inntek ya tiene manejo de Auth, reutilizar)
+CREATE TABLE Users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    role VARCHAR(50) DEFAULT 'admin', -- Solo admin inntek?
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```

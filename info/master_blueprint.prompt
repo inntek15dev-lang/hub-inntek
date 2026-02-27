@@ -1,0 +1,43 @@
+# Master Blueprint: Catálogo Gestionado PARKO
+UUID: `hub-inntek-2026-02-27-10-00`
+Versión Estándar: IEEE 12207:2017
+Criticidad: ALTA
+
+## 1. Domain-Driven Design (DDD) Contexts
+
+### 1.1. Core Domain: Catalog Management (hub-inntek)
+- **Aggregates:**
+  - `ElementoCatalogo`: Representa un ítem en el catálogo (MVPs, Demos, UAT).
+  - `CategoriaUsabilidad`: Representa las categorías (operativo, documental, control, etc.).
+  - `ConfiguracionGeneral`: Gestiona el contenido del home y metadata.
+- **Roles y Permisos:**
+  - `Admin`: Gestión total del CRUD de elementos y configuración general.
+  - `Public`: Acceso de solo lectura al catálogo público y home.
+
+## 2. Technical Stack
+- **Backend:** Node.js + Express (Puerto: 4010)
+- **Frontend:** React + Vite SPA (Puerto: 5177)
+- **Database:** MySQL 8.0+ (InnoDB) con integración aiven
+- **Auth:** JWT (RS256)
+
+## 3. High-Level Requirements
+1. **Home Público:** Integración del componente catálogo y metadata.
+2. **Catálogo Público:** Visualización de elementos estructurados en tarjetas.
+3. **CRUD Admin:** Gestión de elementos, iconos, URLs, y documentación.
+4. **Tarjetas de Elemento:**
+   - Título
+   - Detalle
+   - Imagen / Icono / Logo
+   - Tipo de producto
+   - Set de Iconos
+   - Categoría de Usabilidad
+   - Acciones: "Editar elemento" (Admin), "Ver documentación", "Ir al sitio".
+
+## 4. API Endpoints (Proyección Inicial)
+- `GET /api/catalog` - Obtener catálogo (público)
+- `GET /api/catalog/:id` - Detalle de elemento
+- `POST /api/catalog` - Crear elemento (Admin)
+- `PUT /api/catalog/:id` - Actualizar (Admin)
+- `DELETE /api/catalog/:id` - Eliminar (Admin)
+- `GET /api/config` - Obtener configuración general
+- `PUT /api/config` - Actualizar configuración (Admin)
