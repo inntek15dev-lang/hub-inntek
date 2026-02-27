@@ -1,0 +1,8 @@
+info/*
+info/
+.env
+node_modules/*
+back/node_modules/*
+front/node_modules/*
+back/src/config/ca.pem
+back/src/config/ca-cert.pem     
