@@ -270,6 +270,13 @@
         margin-bottom: 4px;
     }
 
+    /* ── Catalog Item Wrappers ─────────────────────────────────────────── */
+    [id^=item-] {
+        box-shadow: -2px 8px 20px black;
+        background-color: #ffffff;
+        border-radius: 12px;
+    }
+
     /* ── Grids / Lists inside Sections ─────────────────────────────────── */
     section {
         @apply grid;
