@@ -1,26 +1,20 @@
 const express = require('express');
 const router = express.Router();
 const catalogController = require('../controllers/catalogController');
+const categoryController = require('../controllers/categoryController');
 
-/**
- * @swagger
- * /api/catalog:
- *   get:
- *     description: Obtener catálogo público
- */
+// ── Categories ─────────────────────────────────────────────────────────
+router.get('/categories', categoryController.getAll);
+router.get('/categories/:id', categoryController.getById);
+router.post('/categories', categoryController.create);
+router.put('/categories/:id', categoryController.update);
+router.delete('/categories/:id', categoryController.remove);
+
+// ── Catalog Elements ───────────────────────────────────────────────────
 router.get('/catalog', catalogController.getAll);
-
-/**
- * @swagger
- * /api/catalog/{id}:
- *   get:
- *     description: Detalle de elemento
- */
 router.get('/catalog/:id', catalogController.getById);
-
-// Admin Routes would go here (protected by auth middleware)
-// router.post('/catalog', auth, catalogController.create);
-// router.put('/catalog/:id', auth, catalogController.update);
-// router.delete('/catalog/:id', auth, catalogController.delete);
+router.post('/catalog', catalogController.create);
+router.put('/catalog/:id', catalogController.update);
+router.delete('/catalog/:id', catalogController.remove);
 
 module.exports = router;

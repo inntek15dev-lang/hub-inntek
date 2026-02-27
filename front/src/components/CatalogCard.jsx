@@ -1,24 +1,35 @@
 import React from 'react';
-import classNames from 'classnames';
+import { Link } from 'react-router-dom';
 
-const CatalogCard = ({ element }) => {
+const CatalogCard = ({ element, onDelete, showAdmin }) => {
     return (
-        <div className={classNames("bg-white rounded-lg shadow-md p-4 flex flex-col gap-2")}>
-            <img src={element.imagen_url || '/vite.svg'} alt={element.titulo} className="h-32 object-contain" />
-            <h3 className="text-lg font-bold text-blue-900">{element.titulo}</h3>
-            <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded inline-block max-w-max">
-                {element.tipo_producto}
-            </span>
-            <p className="text-sm text-gray-600 flex-1">{element.detalle}</p>
-            <div className="flex gap-2 mt-4">
-                {element.url_sitio && (
-                    <a href={element.url_sitio} target="_blank" rel="noreferrer" className="bg-blue-600 text-white text-sm px-3 py-1 rounded">Ir al Sitio</a>
+        <article>
+            <figure>
+                <img src={element.imagen_url || '/logo.gif'} alt={element.titulo} />
+            </figure>
+            <header>
+                <h3>{element.titulo}</h3>
+            </header>
+            <mark>{element.tipo_producto || 'N/A'}</mark>
+            {element.categoria_nombre && <small>{element.categoria_nombre}</small>}
+            <p>{element.detalle}</p>
+            <footer>
+                {element.url_sitio && element.url_sitio !== '#' && (
+                    <a href={element.url_sitio} target="_blank" rel="noreferrer">Ir al Sitio</a>
                 )}
-                {element.url_documentacion && (
-                    <button className="border border-blue-600 text-blue-600 text-sm px-3 py-1 rounded">Ver Documentación</button>
+                {element.url_documentacion && element.url_documentacion !== '#' && (
+                    <a href={element.url_documentacion} target="_blank" rel="noreferrer">Documentación</a>
                 )}
-            </div>
-        </div>
+                {showAdmin && (
+                    <>
+                        <Link to={`/admin/catalog/${element.id}/edit`}>
+                            <button>Editar</button>
+                        </Link>
+                        <button onClick={onDelete}>Eliminar</button>
+                    </>
+                )}
+            </footer>
+        </article>
     );
 };
 
