@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const API_BASE = 'http://localhost:4010/api';
+const API_BASE = import.meta.env.PROD
+    ? 'https://hub-inntek-api.onrender.com/api'
+    : 'http://localhost:4010/api';
 
 const api = axios.create({
     baseURL: API_BASE,
