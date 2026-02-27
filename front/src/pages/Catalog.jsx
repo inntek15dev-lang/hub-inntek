@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import { getCatalogItems, deleteCatalogItem } from '../services/api';
 import CatalogCard from '../components/CatalogCard';
 
 const Catalog = () => {
+    const { isAuthenticated, canWrite } = useAuth();
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -30,20 +32,24 @@ const Catalog = () => {
             await deleteCatalogItem(id);
             fetchItems();
         } catch (err) {
-            alert('Error al eliminar: ' + err.message);
+            alert('Error al eliminar: ' + (err.response?.data?.message || err.message));
         }
     };
 
     if (loading) return <main><p>Cargando catálogo...</p></main>;
     if (error) return <main><p>{error}</p></main>;
 
+    const showAdmin = isAuthenticated && canWrite('Catalogo');
+
     return (
         <main>
             <header data-page-header>
                 <h2>Catálogo de Productos y Servicios</h2>
-                <Link to="/admin/catalog/new">
-                    <button type="submit">+ Nuevo Elemento</button>
-                </Link>
+                {showAdmin && (
+                    <Link to="/admin/catalog/new">
+                        <button type="submit">+ Nuevo Elemento</button>
+                    </Link>
+                )}
             </header>
             <section>
                 {items.map(el => (
@@ -51,7 +57,7 @@ const Catalog = () => {
                         <CatalogCard
                             element={el}
                             onDelete={() => handleDelete(el.id)}
-                            showAdmin={true}
+                            showAdmin={showAdmin}
                         />
                     </div>
                 ))}
