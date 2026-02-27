@@ -1,0 +1,12 @@
+/* ==========================================================================
+   GLOBAL THEME REFERENCE (PARKO PROTOCOL)
+   ========================================================================== 
+   
+   NOTE: This file is kept as a REFERENCE ONLY.
+   The actual theme rules are inlined directly in index.css after 
+   the @tailwind directives to avoid CSS @import ordering conflicts.
+   
+   Any theme modifications should be made in index.css inside 
+   the @layer base { ... } block.
+   
+   ========================================================================== */
